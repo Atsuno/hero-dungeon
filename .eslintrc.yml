@@ -1,0 +1,18 @@
+extends: airbnb-base
+env:
+  browser: true
+  es6: true
+  mocha: true
+  node: true
+plugins:
+  - import
+rules:
+  semi: ["error", "never"]
+  linebreak-style: ["error", "windows"]
+  class-methods-use-this: 0
+  no-confusing-arrow: 0
+  no-plusplus: 0
+  arrow-parens: ["error", "as-needed"]
+  max-len: ["error", 150]
+  newline-per-chained-call: ["error", { "ignoreChainWithDepth": 5 }]
+  func-names: ["error", "never"]
