@@ -6,6 +6,7 @@ import sinon from 'sinon'
 import ChaiAsPromised from 'chai-as-promised'
 import Dungeon from '../src/Dungeon'
 import Server from '../src/Server'
+import Hero from '../src/Hero'
 
 chai.use(ChaiAsPromised)
 
@@ -95,6 +96,13 @@ describe('Dungeon', function () {
         .and.satisfy(expectHero => expect(expectHero.hp).to.be.equal(800))
     })
 
+    it('should be hero hp reduce 200', function () {
+      const hero = { hp: 2000, item: {}, gold: 0 }
+
+      return expect(Dungeon.playDungeon1(hero))
+        .and.satisfy(expectHero => expect(expectHero.hp).to.be.equal(1800))
+    })
+
     it('should be hero gold incress 2 ', function () {
       const hero = { hp: 1000, item: {}, gold: 0 }
 
@@ -110,8 +118,20 @@ describe('Dungeon', function () {
     })
 
     it('should be hero { hp: 800, item: { chestbox: 1 }, gold: 2 } ', function () {
-      const hero = { hp: 1000, item: {}, gold: 0 }
-      const expectHero = { hp: 800, item: { chestbox: 1 }, gold: 2 }
+      this.sinon.stub(Hero, 'reward').returns({ hp: 1600, item: { chestbox: 1 }, gold: 2 })
+
+      const hero = { hp: 1800, item: {}, gold: 0 }
+      const expectHero = { hp: 1600, item: { chestbox: 1 }, gold: 2 }
+
+      return expect(Dungeon.playDungeon1(hero))
+        .to.be.eqls(expectHero)
+    })
+
+    it('should be hero { hp: 1800, item: { chestbox: 2 }, gold: 5 } ', function () {
+      this.sinon.stub(Hero, 'reward').returns({ hp: 1600, item: { chestbox: 1 }, gold: 2 })
+
+      const hero = { hp: 1800, item: {}, gold: 0 }
+      const expectHero = { hp: 1600, item: { chestbox: 1 }, gold: 2 }
 
       return expect(Dungeon.playDungeon1(hero))
         .to.be.eqls(expectHero)
@@ -148,8 +168,20 @@ describe('Dungeon', function () {
     })
 
     it('should be hero { hp: 800, item: { chestbox: 2, sword: 1 }, gold: 5 }', function () {
+      this.sinon.stub(Hero, 'reward').returns({ hp: 800, item: { chestbox: 2, sword: 1 }, gold: 5 })
+
       const expectHero = { hp: 800, item: { chestbox: 1 }, gold: 2 }
       const expectHero2 = { hp: 800, item: { chestbox: 2, sword: 1 }, gold: 5 }
+
+      return expect(Dungeon.playDungeon2(expectHero))
+        .to.be.eqls(expectHero2)
+    })
+
+    it('should be hero { hp: 800, item: { chestbox: 2, sword: 1 }, gold: 5 }', function () {
+      this.sinon.stub(Hero, 'reward').returns({ hp: 1800, item: { chestbox: 3, sword: 1 }, gold: 13 })
+
+      const expectHero = { hp: 1800, item: { chestbox: 2 }, gold: 10 }
+      const expectHero2 = { hp: 1800, item: { chestbox: 3, sword: 1 }, gold: 13 }
 
       return expect(Dungeon.playDungeon2(expectHero))
         .to.be.eqls(expectHero2)
@@ -179,8 +211,20 @@ describe('Dungeon', function () {
     })
 
     it('should be hero { hp: 800, item: { chestbox: 2, sword: 1 }, gold: 5 }', function () {
+      this.sinon.stub(Hero, 'reward').returns({ hp: 800, item: { chestbox: 2, sword: 1, steel: 5 }, gold: 15 })
+
       const expectHero2 = { hp: 800, item: { chestbox: 2, sword: 1 }, gold: 5 }
       const expectHeor3 = { hp: 800, item: { chestbox: 2, sword: 1, steel: 5 }, gold: 15 }
+
+      return expect(Dungeon.playDungeon3(expectHero2))
+        .to.be.eqls(expectHeor3)
+    })
+
+    it('should be hero { hp: 800, item: { chestbox: 2, sword: 1 }, gold: 5 }', function () {
+      this.sinon.stub(Hero, 'reward').returns({ hp: 2800, item: { chestbox: 2, sword: 1, steel: 5 }, gold: 20 })
+
+      const expectHero2 = { hp: 2800, item: { chestbox: 2, sword: 1 }, gold: 10 }
+      const expectHeor3 = { hp: 2800, item: { chestbox: 2, sword: 1, steel: 5 }, gold: 20 }
 
       return expect(Dungeon.playDungeon3(expectHero2))
         .to.be.eqls(expectHeor3)
