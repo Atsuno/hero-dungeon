@@ -186,13 +186,4 @@ describe('Dungeon', function () {
         .to.be.eqls(expectHeor3)
     })
   })
-
-  describe('playDungeon0()', function () {
-    it('should be hero { hp: 800, item: { chestbox: 1 }, gold: 2 } ', function () {
-      const expectHero = { gold: 2, hp: 800, item: { chestbox: 1 } }
-
-      return expect(Dungeon.playDungeon0())
-        .to.be.eqls(expectHero)
-    })
-  })
 })
