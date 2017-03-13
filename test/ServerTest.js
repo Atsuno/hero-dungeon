@@ -18,30 +18,26 @@ describe('Server', function () {
   })
 
   describe('connect()', function () {
-    it('should be true is show status hero', function () {
+    it('should be true is true', function () {
       return expect(Server.connect(true))
-        .to.eqls({ hp: 1000, item: {}, gold: 0 })
+        .to.equal(true)
     })
 
-    it('should be reject is thow server down', function () {
-      return expect(function () {
-        Server.connect(false)
-      })
-        .to.throw(/server down/)
+    it('should be true is true', function () {
+      return expect(Server.connect(false))
+        .to.equal(true)
     })
   })
 
-  describe('disConnect()', function () {
-    it('should be true is Successful', function () {
-      return expect(Server.disConnect(true))
-        .to.eqls('Successful')
+  describe('disconnect()', function () {
+    it('should be true is true', function () {
+      return expect(Server.disconnect(true))
+        .to.equal(true)
     })
 
-    it('should be reject is thow server down', function () {
-      return expect(function () {
-        Server.disConnect(false)
-      })
-        .to.throw(/server error/)
+    it('should be true is true', function () {
+      return expect(Server.disconnect(false))
+        .to.equal(true)
     })
   })
 })
